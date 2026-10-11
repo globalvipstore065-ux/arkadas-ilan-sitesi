@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FriendHub - Arkadaşını Bul, Hayatını Renklendir</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary: #6366f1;
+  --secondary: #ec4899;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --dark: #0f172a;
+  --light: #f8fafc;
+  --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+html { scroll-behavior: smooth; }
+body { background: #f8fafc; color: #0f172a; overflow-x: hidden; }
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 18px 50px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+  transition: all 0.3s;
+}
+.logo {
+  font-size: 26px; font-weight: 900;
+  background: var(--gradient-1); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo i { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;
+  transition: all 0.3s; position: relative;
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 3px;
+  background: var(--gradient-1); border-radius: 3px; transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-btn {
+  padding: 11px 26px; border-radius: 50px; border: none; cursor: pointer;
+  background: var(--gradient-1); color: white; font-weight: 600; font-size: 14px;
+  transition: all 0.3s; box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.6); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh; padding: 140px 50px 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; right: -20%; width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  border-radius: 50%; animation: float 8s ease-in-out infinite;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -30%; left: -10%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%; animation: float 10s ease-in-out infinite reverse;
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(40px, -40px) rotate(180deg); }
+}
+.hero-content { text-align: center; color: white; z-index: 2; max-width: 900px; position: relative; }
+.hero-badge {
+  display: inline-block; padding: 8px 20px; border-radius: 50px;
+  background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3); font-size: 13px; font-weight: 500;
+  margin-bottom: 24px; animation: fadeDown 0.8s ease;
+}
+.hero h1 {
+  font-size: clamp(38px, 6vw, 72px); font-weight: 900; line-height: 1.1;
+  margin-bottom: 24px; animation: fadeUp 0.8s ease 0.2s backwards;
+}
+.hero h1 span {
+  background: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero p {
+  font-size: 19px; opacity: 0.95; max-width: 650px; margin: 0 auto 40px;
+  line-height: 1.7; animation: fadeUp 0.8s ease 0.4s backwards;
+}
+.hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.6s backwards; }
+.btn-primary, .btn-secondary {
+  padding: 16px 38px; border-radius: 50px; border: none; cursor: pointer;
+  font-weight: 700; font-size: 15px; transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-primary {
+  background: white; color: #667eea;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+.btn-secondary {
+  background: rgba(255,255,255,0.15); color: white;
+  border: 2px solid rgba(255,255,255,0.5); backdrop-filter: blur(10px);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.25); transform: translateY(-3px); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== İSTATİSTİKLER ===== */
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px; max-width: 1100px; margin: -60px auto 60px; padding: 0 30px;
+  position: relative; z-index: 3;
+}
+.stat-card {
+  background: white; padding: 32px 24px; border-radius: 20px; text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  transition: all 0.4s; border-top: 4px solid;
+}
+.stat-card:nth-child(1) { border-color: #667eea; }
+.stat-card:nth-child(2) { border-color: #f5576c; }
+.stat-card:nth-child(3) { border-color: #4facfe; }
+.stat-card:nth-child(4) { border-color: #43e97b; }
+.stat-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+.stat-card i { font-size: 32px; margin-bottom: 12px; display: block; }
+.stat-card:nth-child(1) i { color: #667eea; }
+.stat-card:nth-child(2) i { color: #f5576c; }
+.stat-card:nth-child(3) i { color: #4facfe; }
+.stat-card:nth-child(4) i { color: #43e97b; }
+.stat-card h3 { font-size: 34px; font-weight: 900; margin-bottom: 4px; }
+.stat-card p { color: #64748b; font-size: 14px; font-weight: 500; }
+
+/* ===== BÖLÜM BAŞLIKLARI ===== */
+.section { padding: 80px 50px; max-width: 1300px; margin: 0 auto; }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title span {
+  display: inline-block; padding: 6px 18px; border-radius: 50px;
+  background: linear-gradient(135deg, #e0e7ff, #fce7f3);
+  color: #6366f1; font-size: 13px; font-weight: 600; margin-bottom: 16px;
+}
+.section-title h2 {
+  font-size: clamp(28px, 4vw, 46px); font-weight: 900; color: #0f172a; margin-bottom: 14px;
+}
+.section-title h2 span {
+  background: var(--gradient-2); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; padding: 0; background-color: transparent;
+}
+.section-title p { color: #64748b; font-size: 16px; max-width: 600px; margin: 0 auto; }
+
+/* ===== ÖZELLİKLER ===== */
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+.feature-card {
+  padding: 40px 32px; border-radius: 24px; background: white;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06); transition: all 0.4s;
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.feature-card:nth-child(1)::before { background: var(--gradient-1); }
+.feature-card:nth-child(2)::before { background: var(--gradient-2); }
+.feature-card:nth-child(3)::before { background: var(--gradient-3); }
+.feature-card:nth-child(4)::before { background: var(--gradient-4); }
+.feature-card:nth-child(5)::before { background: var(--gradient-5); }
+.feature-card:nth-child(6)::before { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+.feature-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
+.feature-icon {
+  width: 64px; height: 64px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; color: white; margin-bottom: 22px;
+}
+.feature-card:nth-child(1) .feature-icon { background: var(--gradient-1); }
+.feature-card:nth-child(2) .feature-icon { background: var(--gradient-2); }
+.feature-card:nth-child(3) .feature-icon { background: var(--gradient-3); }
+.feature-card:nth-child(4) .feature-icon { background: var(--gradient-4); }
+.feature-card:nth-child(5) .feature-icon { background: var(--gradient-5); }
+.feature-card:nth-child(6) .feature-icon { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+.feature-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+.feature-card p { color: #64748b; font-size: 14px; line-height: 1.7; }
+
+/* ===== İLAN FORMU ===== */
+.form-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80px 50px; border-radius: 40px; margin: 60px 30px;
+  position: relative; overflow: hidden;
+}
+.form-section::before {
+  content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  border-radius: 50%;
+}
+.form-container {
+  max-width: 800px; margin: 0 auto; position: relative; z-index: 2;
+  background: white; padding: 50px; border-radius: 30px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+}
+.form-container h2 { text-align: center; font-size: 30px; font-weight: 900; margin-bottom: 8px; }
+.form-container > p { text-align: center; color: #64748b; margin-bottom: 32px; font-size: 14px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: 13px; font-weight: 600; color: #334155; }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 14px 18px; border: 2px solid #e2e8f0; border-radius: 14px;
+  font-size: 14px; font-family: inherit; transition: all 0.3s; background: #f8fafc;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: #667eea; background: white;
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.15);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.submit-btn {
+  grid-column: 1 / -1; padding: 18px; border: none; border-radius: 14px;
+  background: var(--gradient-1); color: white; font-weight: 700; font-size: 16px;
+  cursor: pointer; transition: all 0.3s; margin-top: 10px;
+  box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.submit-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(102,126,234,0.6); }
+
+/* ===== İLANLAR ===== */
+.filters {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 40px;
+}
+.filter-btn {
+  padding: 10px 22px; border-radius: 50px; border: 2px solid #e2e8f0;
+  background: white; color: #475569; font-weight: 600; font-size: 13px;
+  cursor: pointer; transition: all 0.3s; font-family: inherit;
+}
+.filter-btn:hover { border-color: #667eea; color: #667eea; transform: translateY(-2px); }
+.filter-btn.active { background: var(--gradient-1); color: white; border-color: transparent; box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+.ilanlar-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+.ilan-kart {
+  background: white; border-radius: 20px; padding: 26px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: all 0.4s;
+  position: relative; overflow: hidden; border-top: 5px solid;
+  animation: kartGel 0.5s ease;
+}
+@keyframes kartGel { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.ilan-kart:nth-child(5n+1) { border-color: #667eea; }
+.ilan-kart:nth-child(5n+2) { border-color: #f5576c; }
+.ilan-kart:nth-child(5n+3) { border-color: #4facfe; }
+.ilan-kart:nth-child(5n+4) { border-color: #43e97b; }
+.ilan-kart:nth-child(5n+5) { border-color: #fa709a; }
+.ilan-kart:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+.ilan-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.avatar {
+  width: 54px; height: 54px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; color: white;
+  font-weight: 700; font-size: 20px; flex-shrink: 0;
+}
+.ilan-kart:nth-child(5n+1) .avatar { background: var(--gradient-1); }
+.ilan-kart:nth-child(5n+2) .avatar { background: var(--gradient-2); }
+.ilan-kart:nth-child(5n+3) .avatar { background: var(--gradient-3); }
+.ilan-kart:nth-child(5n+4) .avatar { background: var(--gradient-4); }
+.ilan-kart:nth-child(5n+5) .avatar { background: var(--gradient-5); }
+.ilan-header-info h3 { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+.ilan-header-info p { font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 4px; }
+.ilan-aciklama { color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+.ilan-etiketler { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.etiket {
+  padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
+  background: #eef2ff; color: #6366f1;
+}
+.etiket.ilgi { background: #fce7f3; color: #ec4899; }
+.etiket.sehir { background: #dbeafe; color: #2563eb; }
+.ilan-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 14px; border-top: 1px solid #f1f5f9;
+}
+.ilan-footer small { color: #94a3b8; font-size: 11px; }
+.iletisim-btn {
+  padding: 8px 18px; border-radius: 50px; border: none; cursor: pointer;
+  background: var(--gradient-1); color: white; font-weight: 600; font-size: 12px;
+  transition: all 0.3s; font-family: inherit;
+}
+.iletisim-btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+.empty-state { text-align: center; padding: 60px 20px; color: #94a3b8; grid-column: 1 / -1; }
+.empty-state i { font-size: 60px; margin-bottom: 20px; opacity: 0.3; }
+
+/* ===== YORUM/BLOG ===== */
+.yorumlar { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.yorum-kart {
+  background: white; padding: 32px; border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06); position: relative;
+  transition: all 0.3s;
+}
+.yorum-kart:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.yorum-kart::before {
+  content: '"'; position: absolute; top: 10px; right: 24px;
+  font-size: 80px; color: #e0e7ff; font-family: Georgia; line-height: 1;
+}
+.yorum-kart p { color: #475569; font-size: 14px; line-height: 1.7; margin-bottom: 20px; position: relative; z-index: 1; }
+.yorum-yazar { display: flex; align-items: center; gap: 12px; }
+.yorum-yazar .avatar { width: 46px; height: 46px; font-size: 16px; }
+.yorum-yazar-info h4 { font-size: 14px; font-weight: 700; }
+.yorum-yazar-info p { font-size: 12px; color: #94a3b8; margin: 0; }
+.stars { color: #fbbf24; margin-bottom: 12px; font-size: 13px; }
+
+/* ===== CTA ===== */
+.cta {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  padding: 80px 50px; border-radius: 40px; margin: 60px 30px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2), transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(255,255,255,0.2), transparent 50%);
+}
+.cta-content { position: relative; z-index: 2; color: white; }
+.cta h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; margin-bottom: 16px; }
+.cta p { font-size: 17px; opacity: 0.95; margin-bottom: 32px; }
+.cta button {
+  padding: 18px 44px; border-radius: 50px; border: none;
+  background: white; color: #ec4899; font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: all 0.3s; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  font-family: inherit;
+}
+.cta button:hover { transform: translateY(-4px) scale(1.05); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: #0f172a; color: #cbd5e1; padding: 70px 50px 30px;
+  margin-top: 80px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+  max-width: 1300px; margin: 0 auto 50px;
+}
+.footer-col h4 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+.footer-col p, .footer-col a {
+  color: #94a3b8; font-size: 14px; line-height: 1.9;
+  text-decoration: none; display: block; transition: color 0.3s;
+}
+.footer-col a:hover { color: #667eea; }
+.footer-logo {
+  font-size: 26px; font-weight: 900; margin-bottom: 16px;
+  background: var(--gradient-1); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.social { display: flex; gap: 12px; margin-top: 20px; }
+.social a {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); display: flex;
+  align-items: center; justify-content: center; color: #cbd5e1;
+  transition: all 0.3s;
+}
+.social a:hover { background: var(--gradient-1); color: white; transform: translateY(-3px); }
+.copyright {
+  text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);
+  color: #64748b; font-size: 13px; max-width: 1300px; margin: 0 auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .navbar { padding: 15px 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 120px 24px 60px; }
+  .section { padding: 60px 24px; }
+  .form-section, .cta { padding: 50px 24px; margin: 40px 15px; border-radius: 24px; }
+  .form-container { padding: 32px 24px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+  footer { padding: 50px 24px 20px; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 5px; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo"><i class="fas fa-users"></i> FriendHub</div>
+  <ul class="nav-links">
+    <li><a href="#anasayfa">Ana Sayfa</a></li>
+    <li><a href="#ozellikler">Özellikler</a></li>
+    <li><a href="#ilanlar">İlanlar</a></li>
+    <li><a href="#yorumlar">Yorumlar</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+  <button class="nav-btn" onclick="scrollToForm()">İlan Ver</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="anasayfa">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-star"></i> Türkiye'nin #1 Arkadaşlık Platformu</div>
+    <h1>Yeni Arkadaşlar Bul,<br><span>Hayatını Renklendir</span></h1>
+    <p>Binlerce kişi arasından sana en uygun arkadaşı bul. İlgi alanlarına göre filtrele, tanış, sohbet et ve yeni dostluklar kur.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="scrollToForm()"><i class="fas fa-plus-circle"></i> Ücretsiz İlan Ver</button>
+      <button class="btn-secondary" onclick="scrollToList()"><i class="fas fa-search"></i> İlanları Keşfet</button>
+    </div>
+  </div>
+</section>
+
+<!-- İSTATİSTİKLER -->
+<div class="stats">
+  <div class="stat-card">
+    <i class="fas fa-users"></i>
+    <h3>25.000+</h3>
+    <p>Aktif Üye</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-comments"></i>
+    <h3>150.000+</h3>
+    <p>Mesajlaşma</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-heart"></i>
+    <h3>8.500+</h3>
+    <p>Kurulan Dostluk</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-star"></i>
+    <h3>4.9/5</h3>
+    <p>Kullanıcı Puanı</p>
+  </div>
+</div>
+
+<!-- ÖZELLİKLER -->
+<section class="section" id="ozellikler">
+  <div class="section-title">
+    <span>NEDEN BİZ?</span>
+    <h2>Size Özel <span>Özellikler</span></h2>
+    <p>Modern, güvenli ve kullanıcı dostu platformumuzla kolayca arkadaş bulun</p>
+  </div>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+      <h3>%100 Güvenli</h3>
+      <p>Tüm profiller doğrulanır. KVKK uyumlu altyapı ile verileriniz güvende.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+      <h3>Hızlı Eşleşme</h3>
+      <p>Akıllı algoritmamız ilgi alanlarınıza göre size en uygun kişileri önerir.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-comment-dots"></i></div>
+      <h3>Anında Mesaj</h3>
+      <p>Beğendiğiniz kişilere anında mesaj gönderin, sohbeti başlatın.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-filter"></i></div>
+      <h3>Gelişmiş Filtre</h3>
+      <p>Şehir, yaş, ilgi alanı ve daha fazlasına göre kolayca filtreleyin.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h3>Mobil Uyumlu</h3>
+      <p>Her cihazdan kesintisiz erişim. Telefon, tablet veya bilgisayar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fas fa-crown"></i></div>
+      <h3>Premium Deneyim</h3>
+      <p>Reklamsız kullanım, öne çıkan ilanlar ve özel rozetler ile fark yaratın.</p>
+    </div>
+  </div>
+</section>
+
+<!-- İLAN FORMU -->
+<div class="form-section" id="ilan-ver">
+  <div class="form-container">
+    <h2>🎉 Ücretsiz İlan Ver</h2>
+    <p>Sadece 30 saniyede ilanını oluştur ve binlerce kişiye ulaş</p>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Adınız *</label>
+        <input type="text" id="isim" placeholder="Örn: Ahmet">
+      </div>
+      <div class="form-group">
+        <label>Yaşınız *</label>
+        <input type="number" id="yas" placeholder="Örn: 25" min="18" max="99">
+      </div>
+      <div class="form-group">
+        <label>Şehir *</label>
+        <input type="text" id="sehir" placeholder="Örn: İstanbul">
+      </div>
+      <div class="form-group">
+        <label>Cinsiyet</label>
+        <select id="cinsiyet">
+          <option value="">Seçiniz</option>
+          <option>Kadın</option>
+          <option>Erkek</option>
+          <option>Belirtmek istemiyorum</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>İlgi Alanı *</label>
+        <select id="ilgi">
+          <option value="">Seçiniz</option>
+          <option>🎮 Oyun</option>
+          <option>⚽ Spor</option>
+          <option>🎵 Müzik</option>
+          <option>📚 Kitap</option>
+          <option>✈️ Seyahat</option>
+          <option>💻 Yazılım</option>
+          <option>🎬 Sinema</option>
+          <option>🍳 Yemek</option>
+          <option>📷 Fotoğrafçılık</option>
+          <option>🎨 Sanat</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Aradığınız *</label>
+        <select id="arayan">
+          <option value="">Seçiniz</option>
+          <option>Arkadaş</option>
+          <option>Sohbet Arkadaşı</option>
+          <option>Oyun Arkadaşı</option>
+          <option>Spor Partneri</option>
+          <option>Dil Değişimi</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Kendinizden Bahsedin *</label>
+        <textarea id="aciklama" placeholder="İlgi alanlarınız, hobileriniz ve nasıl bir arkadaş aradığınız hakkında kısa bir yazı..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="ilanEkle()">
+        <i class="fas fa-paper-plane"></i> İlanı Yayınla
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- İLANLAR -->
+<section class="section" id="ilanlar">
+  <div class="section-title">
+    <span>KEŞFET</span>
+    <h2>Son <span>İlanlar</span></h2>
+    <p>Size uygun arkadaşları bulun ve hemen iletişime geçin</p>
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" onclick="filtrele(this, 'hepsi')">Tümü</button>
+    <button class="filter-btn" onclick="filtrele(this, '🎮 Oyun')">🎮 Oyun</button>
+    <button class="filter-btn" onclick="filtrele(this, '⚽ Spor')">⚽ Spor</button>
+    <button class="filter-btn" onclick="filtrele(this, '🎵 Müzik')">🎵 Müzik</button>
+    <button class="filter-btn" onclick="filtrele(this, '📚 Kitap')">📚 Kitap</button>
+    <button class="filter-btn" onclick="filtrele(this, '✈️ Seyahat')">✈️ Seyahat</button>
+    <button class="filter-btn" onclick="filtrele(this, '💻 Yazılım')">💻 Yazılım</button>
+  </div>
+  <div class="ilanlar-grid" id="ilanListesi"></div>
+</section>
+
+<!-- YORUMLAR -->
+<section class="section" id="yorumlar" style="background: #f8fafc;">
+  <div class="section-title">
+    <span>KULLANICI YORUMLARI</span>
+    <h2>Onlar <span>Ne Diyor?</span></h2>
+    <p>Binlerce mutlu kullanıcıya katılın</p>
+  </div>
+  <div class="yorumlar">
+    <div class="yorum-kart">
+      <div class="stars">★★★★★</div>
+      <p>FriendHub sayesinde 2 yıl önce tanıştığım en yakın arkadaşımla hala görüşüyoruz. Harika bir platform!</p>
+      <div class="yorum-yazar">
+        <div class="avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">AY</div>
+        <div class="yorum-yazar-info">
+          <h4>Ayşe Yılmaz</h4>
+          <p>İstanbul • 2 yıl önce</p>
+        </div>
+      </div>
+    </div>
+    <div class="yorum-kart">
+      <div class="stars">★★★★★</div>
+      <p>Oyun arkadaşı arıyordum, şimdi her akşam birlikte oynadığım 5 kişilik bir ekibim var. Teşekkürler!</p>
+      <div class="yorum-yazar">
+        <div class="avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">MK</div>
+        <div class="yorum-yazar-info">
+          <h4>Mehmet Kaya</h4>
+          <p>Ankara • 8 ay önce</p>
+        </div>
+      </div>
+    </div>
+    <div class="yorum-kart">
+      <div class="stars">★★★★★</div>
+      <p>Yazılım öğreniyorum ve mentor buldum burada. Gerçekten hayat değiştiren bir platform.</p>
+      <div class="yorum-yazar">
+        <div class="avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">ZD</div>
+        <div class="yorum-yazar-info">
+          <h4>Zeynep Demir</h4>
+          <p>İzmir • 1 yıl önce</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-content">
+    <h2>Hemen Ücretsiz Üye Ol!</h2>
+    <p>Kayıt ol, ilanını ver ve binlerce kişi arasından yeni arkadaşını bul</p>
+    <button onclick="scrollToForm()"><i class="fas fa-rocket"></i> Hemen Başla</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="iletisim">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo">FriendHub</div>
+      <p>Türkiye'nin en güvenilir arkadaşlık platformu. Yeni dostluklar kurmak, sohbet etmek ve hayatınızı renklendirmek için buradayız.</p>
+      <div class="social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <a href="#anasayfa">Ana Sayfa</a>
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#ilanlar">İlanlar</a>
+      <a href="#yorumlar">Yorumlar</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kurumsal</h4>
+      <a href="#">Hakkımızda</a>
+      <a href="#">İletişim</a>
+      <a href="#">Kariyer</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Yasal</h4>
+      <a href="#">Gizlilik Politikası</a>
+      <a href="#">Kullanım Şartları</a>
+      <a href="#">KVKK</a>
+      <a href="#">Çerez Politikası</a>
+    </div>
+  </div>
+  <div class="copyright">
+    © 2025 FriendHub. Tüm hakları saklıdır. ❤️ ile Türkiye'de yapıldı.
+  </div>
+</footer>
+
+<script>
+// ===== VERİ YÖNETİMİ =====
+let ilanlar = JSON.parse(localStorage.getItem('friendhub_ilanlar') || '[]');
+let aktifFiltre = 'hepsi';
+
+// Örnek ilanlar (ilk kez açılırsa)
+if (ilanlar.length === 0) {
+  ilanlar = [
+    { isim: "Elif", yas: 24, sehir: "İstanbul", cinsiyet: "Kadın", ilgi: "📚 Kitap", arayan: "Arkadaş", aciklama: "Kitap kurduyum, birlikte kitap okuyup tartışacak arkadaşlar arıyorum. Kafe gezmeleri de olur.", tarih: "2 saat önce" },
+    { isim: "Can", yas: 27, sehir: "Ankara", cinsiyet: "Erkek", ilgi: "🎮 Oyun", arayan: "Oyun Arkadaşı", aciklama: "Valorant, CS2 ve LoL oynuyorum. Takım arkadaşı arıyorum, rank önemli değil.", tarih: "5 saat önce" },
+    { isim: "Selin", yas: 22, sehir: "İzmir", cinsiyet: "Kadın", ilgi: "🎵 Müzik", arayan: "Sohbet Arkadaşı", aciklama: "Indie müzik hastasıyım. Konsere gidecek, playlist paylaşacak arkadaşlar arıyorum.", tarih: "1 gün önce" },
+    { isim: "Burak", yas: 30, sehir: "Bursa", cinsiyet: "Erkek", ilgi: "⚽ Spor", arayan: "Spor Partneri", aciklama: "Hafta sonları halı saha maçı yapıyoruz. Kaleci ve defans arıyoruz, katılmak isteyen?", tarih: "1 gün önce" },
+    { isim: "Deniz", yas: 26, sehir: "Antalya", cinsiyet: "Kadın", ilgi: "✈️ Seyahat", arayan: "Arkadaş", aciklama: "Sık sık kamp ve doğa yürüyüşlerine gidiyorum. Yeni yerler keşfetmeyi sevenler yazsın.", tarih: "2 gün önce" },
+    { isim: "Emre", yas: 29, sehir: "İstanbul", cinsiyet: "Erkek", ilgi: "💻 Yazılım", arayan: "Arkadaş", aciklama: "Full-stack developer'ım. Yazılım öğrenenlere mentorluk yapabilirim, network kurmak isteyenler ulaşsın.", tarih: "3 gün önce" },
+  ];
+  localStorage.setItem('friendhub_ilanlar', JSON.stringify(ilanlar));
+}
+
+// ===== İLAN EKLEME =====
+function ilanEkle() {
+  const isim = document.getElementById('isim').value.trim();
+  const yas = document.getElementById('yas').value.trim();
+  const sehir = document.getElementById('sehir').value.trim();
+  const cinsiyet = document.getElementById('cinsiyet').value;
+  const ilgi = document.getElementById('ilgi').value;
+  const arayan = document.getElementById('arayan').value;
+  const aciklama = document.getElementById('aciklama').value.trim();
+
+  if (!isim || !yas || !sehir || !ilgi || !arayan || !aciklama) {
+    gosterBildirim('⚠️ Lütfen tüm zorunlu (*) alanları doldurun!', 'warning');
+    return;
+  }
+  if (yas < 18) {
+    gosterBildirim('⚠️ 18 yaşından küçükler üye olamaz!', 'warning');
+    return;
+  }
+
+  const yeniIlan = {
+    isim, yas, sehir, cinsiyet, ilgi, arayan, aciklama,
+    tarih: 'Az önce'
+  };
+
+  ilanlar.unshift(yeniIlan);
+  localStorage.setItem('friendhub_ilanlar', JSON.stringify(ilanlar));
+
+  // Formu temizle
+  ['isim','yas','sehir','aciklama'].forEach(id => document.getElementById(id).value = '');
+  ['cinsiyet','ilgi','arayan'].forEach(id => document.getElementById(id).value = '');
+
+  listele();
+  gosterBildirim('✅ İlanınız başarıyla yayınlandı!', 'success');
+  scrollToList();
+}
+
+// ===== LİSTELEME =====
+function listele() {
+  const liste = document.getElementById('ilanListesi');
+  const filtreli = aktifFiltre === 'hepsi' 
+    ? ilanlar 
+    : ilanlar.filter(i => i.ilgi === aktifFiltre);
+
+  if (filtreli.length === 0) {
+    liste.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>Henüz ilan yok</h3>
+        <p>Bu kategoride ilk ilanı siz verin!</p>
+      </div>`;
+    return;
+  }
+
+  liste.innerHTML = filtreli.map(i => {
+    const basHarfler = i.isim.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+    return `
+      <div class="ilan-kart">
+        <div class="ilan-header">
+          <div class="avatar">${basHarfler}</div>
+          <div class="ilan-header-info">
+            <h3>${i.isim}, ${i.yas}</h3>
+            <p><i class="fas fa-map-marker-alt"></i> ${i.sehir}</p>
+          </div>
+        </div>
+        <p class="ilan-aciklama">${i.aciklama}</p>
+        <div class="ilan-etiketler">
+          <span class="etiket ilgi">${i.ilgi}</span>
+          <span class="etiket">${i.arayan}</span>
+          ${i.cinsiyet ? `<span class="etiket sehir">${i.cinsiyet}</span>` : ''}
+        </div>
+        <div class="ilan-footer">
+          <small><i class="far fa-clock"></i> ${i.tarih}</small>
+          <button class="iletisim-btn" onclick="iletisim('${i.isim}')">
+            <i class="fas fa-paper-plane"></i> İletişim
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== FİLTRELEME =====
+function filtrele(btn, kategori) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  aktifFiltre = kategori;
+  listele();
+}
+
+// ===== İLETİŞİM =====
+function iletisim(isim) {
+  gosterBildirim(`💬 ${isim} kişisine mesaj gönderme özelliği yakında aktif olacak!`, 'info');
+}
+
+// ===== BİLDİRİM =====
+function gosterBildirim(mesaj, tip) {
+  const bildirim = document.createElement('div');
+  bildirim.textContent = mesaj;
+  const renkler = {
+    success: 'linear-gradient(135deg, #43e97b, #38f9d7)',
+    warning: 'linear-gradient(135deg, #fa709a, #fee140)',
+    info: 'linear-gradient(135deg, #667eea, #764ba2)'
+  };
+  bildirim.style.cssText = `
+    position: fixed; top: 100px; right: 30px; z-index: 9999;
+    padding: 18px 28px; border-radius: 14px; color: white;
+    font-weight: 600; font-size: 14px; font-family: 'Poppins', sans-serif;
+    background: ${renkler[tip] || renkler.info};
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    animation: slideIn 0.4s ease;
+    max-width: 340px;
+  `;
+  document.body.appendChild(bildirim);
+  setTimeout(() => {
+    bildirim.style.animation = 'slideOut 0.4s ease';
+    setTimeout(() => bildirim.remove(), 400);
+  }, 3500);
+}
+
+// Animasyonlar
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn { from { opacity: 0; transform: translateX(400px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes slideOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(400px); } }
+`;
+document.head.appendChild(style);
+
+// ===== SCROLL =====
+function scrollToForm() {
+  document.getElementById('ilan-ver').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function scrollToList() {
+  document.getElementById('ilanlar').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== NAVBAR SCROLL EFEKTİ =====
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    nav.style.padding = '12px 50px';
+    nav.style.boxShadow = '0 4px 40px rgba(0,0,0,0.12)';
+  } else {
+    nav.style.padding = '18px 50px';
+    nav.style.boxShadow = '0 2px 30px rgba(0,0,0,0.08)';
+  }
+});
+
+// ===== BAŞLANGIÇ =====
+listele();
+</script>
+</body>
+</html>
